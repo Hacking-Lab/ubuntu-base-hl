@@ -4,17 +4,17 @@ MAINTAINER Ivan Buetler <ivan.buetler@compass-security.com>
 ENV DEBIAN_FRONTEND noninteractive
 
 # Add s6-overlay
-ENV S6_OVERLAY_VERSION=v3.1.2.1
+ENV S6_OVERLAY_VERSION=v3.1.5.0
 
-RUN apt update && apt install -y dnsutils curl bash net-tools openssl pwgen vim && \ 
+RUN apt update && apt install -y dnsutils curl bash net-tools openssl pwgen vim xz-utils && \ 
 	apt clean && \
 	apt autoremove
 
-COPY root /
-ADD https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz /tmp
-RUN tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz
-ADD https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz /tmp
-RUN tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz
+RUN curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -Jxpf - -C / 
+RUN curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-i686.tar.xz | tar -Jxpf - -C / 
+
+
+ADD root /
 
 ENTRYPOINT ["/init"]
 CMD []
