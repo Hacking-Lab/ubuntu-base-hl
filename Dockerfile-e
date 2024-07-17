@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-LABEL maintainer="Ivan Buetler <ivan.buetler@compass-security.com>"
+MAINTAINER Ivan Buetler <ivan.buetler@compass-security.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
