@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 LABEL maintainer="Ivan Buetler <ivan.buetler@compass-security.com>"
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Add s6-overlay
 ENV S6_OVERLAY_VERSION=v3.1.5.0
