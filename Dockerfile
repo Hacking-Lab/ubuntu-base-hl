@@ -1,5 +1,5 @@
 FROM ubuntu:latest
-LABEL maintainer="Ivan Buetler <ivan.buetler@compass-security.com>"
+LABEL maintainer="Ivan Buetler <ivan.buetler@hacking-lab.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
 
