@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 LABEL maintainer="Ivan Buetler <ivan.buetler@hacking-lab.com>"
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 # Add s6-overlay
 ENV S6_OVERLAY_VERSION=v3.1.5.0
