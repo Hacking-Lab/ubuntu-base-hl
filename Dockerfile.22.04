@@ -1,22 +1,36 @@
-FROM ubuntu:22.04
+FROM hackinglab/ubuntu-base-hl:22.04
 LABEL maintainer="Ivan Buetler <ivan.buetler@hacking-lab.com>"
 
 ENV DEBIAN_FRONTEND=noninteractive
-
-# Add s6-overlay
 ENV S6_OVERLAY_VERSION=v3.1.5.0
 
-RUN apt update && apt install -y dnsutils curl bash net-tools openssl pwgen vim xz-utils && \ 
-	apt clean && \
-	apt autoremove
+# Prevent services from starting during install (important under QEMU)
+RUN echo '#!/bin/sh\nexit 101' > /usr/sbin/policy-rc.d && \
+    chmod +x /usr/sbin/policy-rc.d
 
-RUN curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz | tar -Jxpf - -C / 
-RUN curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-i686.tar.xz | tar -Jxpf - -C / 
-
+# Add files first
 ADD root /
+
+# Install required packages
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        nginx \
+        vim \
+        openssl \
+        passwd \
+        adduser \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/* && \
+    chown -R www-data:www-data /var/lib/nginx || true && \
+    chown -R www-data:www-data /opt/www || true
+
+# Install s6-overlay (x86_64 assumed — buildx handles platform)
+RUN curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz \
+    | tar -Jxpf - -C / && \
+    curl -sSL https://github.com/just-containers/s6-overlay/releases/download/${S6_OVERLAY_VERSION}/s6-overlay-x86_64.tar.xz \
+    | tar -Jxpf - -C /
+
+EXPOSE 80
 
 ENTRYPOINT ["/init"]
 CMD []
-
-
-
