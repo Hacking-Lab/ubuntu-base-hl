@@ -4,7 +4,7 @@ LABEL maintainer="Ivan Buetler <ivan.buetler@hacking-lab.com>"
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Add s6-overlay
-ENV S6_OVERLAY_VERSION=v3.1.5.0
+ENV S6_OVERLAY_VERSION=v3.2.1.0
 
 RUN apt update && apt install -y dnsutils adduser passwd curl bash net-tools openssl pwgen vim xz-utils && \ 
 	apt clean && \
