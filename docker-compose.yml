@@ -1,4 +1,3 @@
-version: '3.6'
 
 services:
   ubuntu-base-hl:
@@ -6,6 +5,6 @@ services:
     image: hackinglab/ubuntu-base-hl:latest
     environment:
       - HL_USER_USERNAME=hacker
-      - HL_USER_PASSWORD=compass
-      - HL_ROOT_PASSWORD=<change-me>
+      #- HL_USER_PASSWORD=compass
+      #- HL_ROOT_PASSWORD=<change-me>
 
